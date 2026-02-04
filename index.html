@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💘 Valentine Surprise 💘</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <!-- Music -->
+  <audio id="music" autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+  </audio>
+
+  <button id="mute">🔊 Mute</button>
+
+  <h1>Hey Sarah… 💖</h1>
+
+  <!-- Love Letter -->
+  <div id="letter"></div>
+
+  <!-- Cute GIF -->
+  <img src="https://media.tenor.com/4iQ8nIu9k5UAAAAC/cute-love.gif"
+       width="230"
+       style="border-radius:25px; box-shadow:0 0 25px white;">
+
+  <!-- Buttons -->
+  <div>
+    <button id="yesBtn">YES 💖</button>
+    <button id="noBtn">No 😭</button>
+  </div>
+
+  <div id="msg"></div>
+
+  <script>
+    const crushName = "Rinky"; // 🔥 CHANGE NAME HERE
+
+    // Romantic letter typing
+    const letterText =
+      `Dear ${crushName},\n\n` +
+      `I don’t know how to say this normally...\n` +
+      `So I made a whole website 😭💘\n\n` +
+      `You make my days brighter,\n` +
+      `my heart softer,\n` +
+      `and my life happier.\n\n` +
+      `So here’s my question...\n\n` +
+      `Will you be my Valentine? 🌹`;
+
+    let i = 0;
+    function typeLetter() {
+      if (i < letterText.length) {
+        document.getElementById("letter").innerHTML += letterText.charAt(i);
+        i++;
+        setTimeout(typeLetter, 40);
+      }
+    }
+    typeLetter();
+
+    // No button doomed
+    const noBtn = document.getElementById("noBtn");
+    let tries = 0;
+
+    noBtn.addEventListener("mouseover", () => {
+      tries++;
+
+      noBtn.style.left = Math.random() * 80 + "vw";
+      noBtn.style.top = Math.random() * 80 + "vh";
+
+      if (tries > 6) noBtn.innerText = "NO IS NOT ALLOWED 😡💘";
+      if (tries > 9) noBtn.remove();
+    });
+
+    // YES = LOVE ATTACK
+    const yesBtn = document.getElementById("yesBtn");
+    const msg = document.getElementById("msg");
+
+    yesBtn.addEventListener("click", () => {
+      msg.style.display = "block";
+      msg.innerHTML =
+        `😭💖 YAYYYY ${crushName} SAID YES!!! 💖😭<br><br>
+         Our date is officially confirmed 🌹✨`;
+
+      // Confetti Explosion
+      confetti({
+        particleCount: 400,
+        spread: 180,
+        origin: { y: 0.6 }
+      });
+
+      launchHearts();
+
+      // Date Invite Popup
+      setTimeout(() => {
+        alert("💌 Date Invitation: Coffee + Walk + Endless Smiles ☕🌹");
+      }, 1500);
+
+      // WhatsApp auto-message
+      setTimeout(() => {
+        window.location.href =
+          "https://wa.me/?text=" +
+          encodeURIComponent(
+            `😭💖 YES! I will be your Valentine 🌹💘`
+          );
+      }, 5000);
+    });
+
+    // Floating Hearts forever
+    function launchHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerText = "💘";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.animationDuration =
+          (3 + Math.random() * 3) + "s";
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+      }, 200);
+    }
+
+    // Mute toggle
+    const music = document.getElementById("music");
+    const muteBtn = document.getElementById("mute");
+
+    muteBtn.addEventListener("click", () => {
+      music.muted = !music.muted;
+      muteBtn.innerText = music.muted ? "🔇 Unmute" : "🔊 Mute";
+    });
+  </script>
+
+</body>
+</html>
